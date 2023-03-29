@@ -25,8 +25,7 @@ jobs:
       
       - name: Build documentation
         run: |
-          cd ~/rathena
-          mkdocs build --clean --strict --site-dir ~/rathena/doc
+          mkdocs build --clean --strict --site-dir . --config-file ~/rathena/mkdocs.yml
       
       - name: Deploy
         run: |
