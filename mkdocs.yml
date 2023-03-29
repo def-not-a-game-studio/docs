@@ -7,7 +7,7 @@ copyright: rAthena
 #remote_branch: gh-pages
 #remote_name: origin
 #site_favicon: logo.png not working
-docs_dir: ~/rathena/doc
+docs_dir: ../rathena/doc
 nav:
     - Home: index.md
     #- About: about.md
