@@ -11,15 +11,34 @@ jobs:
         
       - name: Checkout main rAthena
         run: |
-          git clone https://github.com/rathena/rathena/ ~/rathena
-          cd ~/rathena
+          git clone https://github.com/def-not-a-game-studio/rathena/ ~/rathena
 
-      - name: Deploy docs
-        uses: mhausenblas/mkdocs-deploy-gh-pages@master
-        # Or use mhausenblas/mkdocs-deploy-gh-pages@nomaterial to build without the mkdocs-material theme
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CONFIG_FILE: ~/rathena/mkdocs.yml
-          EXTRA_PACKAGES: build-base
-          # GITHUB_DOMAIN: github.myenterprise.com
-          # REQUIREMENTS: folder/requirements.txt
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+          
+      - name: Install dependencies
+        run: |
+          cd ~
+          python -m pip install --upgrade pip
+          pip install mkdocs
+      
+      - name: Build documentation
+        run: |
+          ls
+          mkdocs build --clean --strict --site-dir ~/gh-pages
+      
+      - name: Deploy
+        run: |
+          cd ~/rathena
+          
+          # workaround, see https://github.com/actions/checkout/issues/766
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          if ! git config --get user.name; then
+              git config --global user.name "${GITHUB_ACTOR}"
+          fi
+          if ! git config --get user.email; then
+              git config --global user.email "${GITHUB_ACTOR}@users.noreply.${GITHUB_DOMAIN:-"github.com"}"
+          fi
+          
+          mkdocs gh-deploy --config-file mkdocs.yml --force
