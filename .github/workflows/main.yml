@@ -11,7 +11,7 @@ jobs:
         
       - name: Checkout main rAthena
         run: |
-          git clone https://github.com/def-not-a-game-studio/rathena/ ~/rathena
+          git clone https://github.com/def-not-a-game-studio/rathena/ ../rathena
 
       - uses: actions/setup-python@v2
         with:
@@ -25,12 +25,10 @@ jobs:
       
       - name: Build documentation
         run: |
-          mkdocs build --clean --strict --site-dir . --config-file ~/rathena/mkdocs.yml
+          mkdocs build --clean --strict
       
       - name: Deploy
         run: |
-          cd ~/rathena
-          
           # workaround, see https://github.com/actions/checkout/issues/766
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           if ! git config --get user.name; then
