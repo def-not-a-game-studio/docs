@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="rAthena Developement Team" /><link rel="canonical" href="https://rathena.github.io/packet_struct_notation/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Packets Struct Notation - rAthena Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Packets Struct Notation";
+        var mkdocs_page_input_path = "packet_struct_notation.md";
+        var mkdocs_page_url = "/packet_struct_notation/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> rAthena Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Database</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../achievements/">Achievements</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../effect_list/">Effect list</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Source</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Packets Struct Notation</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#typical-description-of-a-packet">Typical description of a packet</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#packet-field-data-size-type">Packet field data size type</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#variable-cases">Variable cases</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#repetition-of-packet-fields">Repetition of packet fields</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#packet-origin-and-destination-letters">Packet origin and destination letters</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tools</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../map_server_generator/">Support files generation</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">rAthena Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Source &raquo;</li>
+      <li>Packets Struct Notation</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/rathena/rathena/edit/master/docs/packet_struct_notation.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <!--
+//===== rAthena Documentation ================================
+//= Packet Structure Notation
+//===== By: ==================================================
+//= Ai4rei
+//===== Last Updated: ========================================
+//= 20120810
+//===== Description: =========================================
+//= Explanation how packets are and should be documented.
+//============================================================
+-->
+
+<h1 id="packet-structure-notation">Packet Structure Notation</h1>
+<p>This document specifies how packets are and should be documented, to
+keep packet structure comments consistent in the entire codebase. It
+also serves as a guide to those, who are unfamiliar with the general
+packet layout.</p>
+<p>All mentioned data types are assumed to be little-endian (least-
+significant byte first, least significant bit last) and of same size
+regardless of architecture.</p>
+<h3 id="typical-description-of-a-packet">Typical description of a packet</h3>
+<pre><code>Notifies the client about entering a chatroom.  
+00db &lt;packet len&gt;.W &lt;chat id&gt;.L { &lt;role&gt;.L &lt;name&gt;.24B }* (ZC_ENTER_ROOM)
+role:  
+  0 = owner (menu)  
+  1 = normal  
+</code></pre>
+<p>The first line contains a brief description of what the packet does,
+or what it is good for, followed by it's <code>AEGIS</code> name in parentheses;
+first two letters of the <code>AEGIS</code> name specify origin (first letter)
+and destination (second letter) of the packet. If the packet's name
+is not known or is not applicable (rAthena server-server packets),
+specify at least these two letters to indicate the direction of the
+packet. Do not use <code>S(end)/R(ecv)</code> for this, as it is inaccurate and
+location dependent (if the description is copied to different server
+or other RO-related projects, it might change it's meaning).</p>
+<p>If there are multiple versions of the packet, the <code>AEGIS</code> name is
+appended to the end of the packet's structure instead. If the name
+did not change between versions, a <code>PACKETVER</code> expression is appended,
+such as <code>(PACKETVER &gt;= 20111111)</code>.</p>
+<p>Second line describes the packet's field structure, beginning with a
+<code>%04x</code> formatted packet type, followed by the individual fields and
+their types. Each field begins with it's name enclosed in angle
+brackets ( <field name> ) followed by a dot and the data size type.
+Field names should be lower-case and without underscores. If other
+packets already have a field in common, use that name, rather than
+inventing your own (ex. "packet len" and "account id"). Repeated and
+optional fields are designated with curly and square brackets
+respectively, padded with a single space at each side.</p>
+<p>Further lines are optional and either include details about the
+the packet's mechanics or further explanation on the packet fields'
+values.</p>
+<h3 id="packet-field-data-size-type">Packet field data size type</h3>
+<table>
+<thead>
+<tr>
+<th>Field name</th>
+<th>Field description</th>
+<th>Field size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B</td>
+<td>byte</td>
+<td>1 byte</td>
+</tr>
+<tr>
+<td>W</td>
+<td>word</td>
+<td>2 bytes</td>
+</tr>
+<tr>
+<td>L</td>
+<td>long, dword</td>
+<td>4 bytes</td>
+</tr>
+<tr>
+<td>F</td>
+<td>float</td>
+<td>4 bytes</td>
+</tr>
+<tr>
+<td>Q</td>
+<td>quad</td>
+<td>8 bytes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="variable-cases">Variable cases</h3>
+<table>
+<thead>
+<tr>
+<th>Field name</th>
+<th>Field description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nB</td>
+<td>n bytes</td>
+</tr>
+<tr>
+<td>?B</td>
+<td>variable/unknown amount of bytes</td>
+</tr>
+<tr>
+<td>nS</td>
+<td>n bytes, zero-terminated</td>
+</tr>
+<tr>
+<td>?S</td>
+<td>variable/unknown amount of bytes, zero-terminated</td>
+</tr>
+</tbody>
+</table>
+<h3 id="repetition-of-packet-fields">Repetition of packet fields</h3>
+<table>
+<thead>
+<tr>
+<th>Field name</th>
+<th>Field description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>{}</td>
+<td>repeated block</td>
+</tr>
+<tr>
+<td>{}*</td>
+<td>variable/unknown amount of consecutive blocks</td>
+</tr>
+<tr>
+<td>{}*n</td>
+<td>n times repeated block</td>
+</tr>
+<tr>
+<td>[]</td>
+<td>optional fields</td>
+</tr>
+</tbody>
+</table>
+<h3 id="packet-origin-and-destination-letters">Packet origin and destination letters</h3>
+<table>
+<thead>
+<tr>
+<th>Origin</th>
+<th>Destination</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>Account (Login)</td>
+</tr>
+<tr>
+<td>C</td>
+<td>Client</td>
+</tr>
+<tr>
+<td>H</td>
+<td>Character</td>
+</tr>
+<tr>
+<td>I</td>
+<td>Inter</td>
+</tr>
+<tr>
+<td>S</td>
+<td>Server (any type of server)</td>
+</tr>
+<tr>
+<td>Z</td>
+<td>Zone (Map)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="examples">Examples</h3>
+<ul>
+<li>Packet with nested repetition blocks:</li>
+</ul>
+<pre><code>/// Presents a textual list of producable items.
+/// 018d &lt;packet len&gt;.W { &lt;name id&gt;.W { &lt;material id&gt;.W }*3 }* (ZC_MAKABLEITEMLIST)
+/// material id:
+///     unused by the client
+</code></pre>
+<ul>
+<li>Packet with multiple versions identified with different AEGIS names:</li>
+</ul>
+<pre><code>/// Request for server's tick.
+/// 007e &lt;client tick&gt;.L (CZ_REQUEST_TIME)
+/// 0360 &lt;client tick&gt;.L (CZ_REQUEST_TIME2)
+</code></pre>
+<ul>
+<li>Packet with multiple versions identified with same AEGIS name:</li>
+</ul>
+<pre><code>/// Cashshop Buy Ack.
+/// 0289 &lt;cash point&gt;.L &lt;error&gt;.W (ZC_PC_CASH_POINT_UPDATE)
+/// 0289 &lt;cash point&gt;.L &lt;kafra point&gt;.L &lt;error&gt;.W (PACKETVER &gt;= 20070711) (ZC_PC_CASH_POINT_UPDATE)
+</code></pre>
+<ul>
+<li>Packet with combination of both different AEGIS names and different versions with same name:</li>
+</ul>
+<pre><code>/// Sends hotkey bar.
+/// 02b9 { &lt;is skill&gt;.B &lt;id&gt;.L &lt;count&gt;.W }*27 (ZC_SHORTCUT_KEY_LIST)
+/// 07d9 { &lt;is skill&gt;.B &lt;id&gt;.L &lt;count&gt;.W }*36 (ZC_SHORTCUT_KEY_LIST_V2, PACKETVER &gt;= 20090603)
+/// 07d9 { &lt;is skill&gt;.B &lt;id&gt;.L &lt;count&gt;.W }*38 (ZC_SHORTCUT_KEY_LIST_V2, PACKETVER &gt;= 20090617)
+</code></pre>
+<ul>
+<li>Packet for a client command:</li>
+</ul>
+<pre><code>/// /item /monster.
+/// Request to make items or spawn monsters.
+/// 013f &lt;item/mob name&gt;.24B (CZ_ITEM_CREATE)
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../effect_list/" class="btn btn-neutral float-left" title="Effect list"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../map_server_generator/" class="btn btn-neutral float-right" title="Support files generation">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>rAthena</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/rathena/rathena" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../effect_list/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../map_server_generator/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

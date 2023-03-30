@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="rAthena Developement Team" /><link rel="canonical" href="https://rathena.github.io/achievements/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Achievements - rAthena Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Achievements";
+        var mkdocs_page_input_path = "achievements.md";
+        var mkdocs_page_url = "/achievements/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> rAthena Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Database</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Achievements</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#sample">Sample</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#content">Content</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#id">Id</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#group">Group</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#name">Name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#targets">Targets</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#condition">Condition</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#map">Map</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dependents">Dependents</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#rewards">Rewards</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#score">Score</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../effect_list/">Effect list</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Source</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../packet_struct_notation/">Packets Struct Notation</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tools</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../map_server_generator/">Support files generation</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">rAthena Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Database &raquo;</li>
+      <li>Achievements</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/rathena/rathena/edit/master/docs/achievements.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <!--
+//===== rAthena Documentation ================================
+//= Achievement Database Structure
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20200220
+//===== Description: =========================================
+//= Explanation of the achievements_db.yml file and structure.
+//============================================================
+-->
+
+<h1 id="achievement-database-structure">Achievement Database Structure</h1>
+<h2 id="sample">Sample</h2>
+<pre><code class="language-yml"> - Id: 99                  
+   Group: Baby            
+   Name: Example Achiev
+   Targets:            
+     - Id: 0
+       Mob: XM_CELINE_KIMI
+       Count: 1
+   Condition: &quot; BaseLevel &gt;= 99 &quot;
+   Map: prontera
+   Dependents:
+     - Id: 100
+   Rewards:
+     Item: Shabby_Purse
+     Amount: 10
+     Script: &quot; specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; &quot;
+     TitleId: 1000
+   Score: 10
+</code></pre>
+<h2 id="content">Content</h2>
+<h3 id="id">Id</h3>
+<p>Unique achievement ID.</p>
+<h3 id="group">Group</h3>
+<p>Achievement group type.<br />
+Each achievement type calls a specific objective check.  </p>
+<details class="card">
+  <summary>Valid groups</summary>
+  <div class="card-body">
+    <ul>
+      <li><code>None</code> - Can be used for custom achievements that are given through a script with no trigger events.</li>
+      <li><code>Add_Friend</code> - Triggered when a player adds a friend.</li>
+      <li><code>Adventure</code> - Does not trigger automatically. These are triggered by the achievementcomplete script command.</li>
+      <li><code>Baby</code> - Triggered when a player becomes a baby job.</li>
+      <li><code>Battle</code> - Triggered when a player kills a monster.</li>
+      <li><code>Chatting</code> - Aegis uses this when talking to a NPC. These are triggered by the achievementupdate script command.</li>
+      <li><code>Chatting_Count</code> - Triggered when a player has a chatroom open and others join.</li>
+      <li><code>Chatting_Create</code> - Triggered when a player creates a chatroom.</li>
+      <li><code>Chatting_Dying</code> - Triggered when a player creates a chatroom and dies with it open.</li>
+      <li><code>Eat</code> - Unknown.</li>
+      <li><code>Get_Item</code> - Triggered when a player gets an item that has a specific sell value.</li>
+      <li><code>Get_Zeny</code> - Triggered when a player gets a specific amount of zeny at once.</li>
+      <li><code>Goal_Achieve</code> - Triggered when a player's achievement rank levels up.</li>
+      <li><code>Goal_Level</code> - Triggered when a player's base level or job level changes.</li>
+      <li><code>Goal_Status</code> - Triggered when a player's base stats changes.</li>
+      <li><code>Job_Change</code> - Triggered when a player's job changes.</li>
+      <li><code>Marry</code> - Triggered when two players get married.</li>
+      <li><code>Party</code> - Triggered when a player creates a party.</li>
+      <li><code>Enchant_Fail</code> - Triggered when a player fails to refine an equipment.</li>
+      <li><code>Enchant_Success</code> - Triggered when a player successfully refines an equipment.</li>
+      <li><code>Spend_Zeny</code> - Triggered when a player spends any amount of zeny on vendors.</li>
+      <li><code>Taming</code> - Triggered when a player tames a monster.</li>
+    </ul>
+  </div>
+</details>
+
+<h3 id="name">Name</h3>
+<p>Achievement name. Used when sending rewards through RODEX.</p>
+<h3 id="targets">Targets</h3>
+<p>A list of monster names and count values that the achievement requires. The target count can also be used for achievements that keep a counter while not being related to monster kills. Capped at <code>MAX_ACHIEVEMENT_OBJECTIVES</code>. See examples below:</p>
+<p>Player must kill 5 Scorpions and 10 Porings</p>
+<pre><code class="language-yml">  Targets:
+    - Id: 0
+      Mob: SCORPION
+      Count: 5
+    - Id: 1
+      Mob: PORING
+      Count: 10
+</code></pre>
+<p>Player must have 100 or more of ARG0 value. Using the count target value is useful for achievements that are increased in increments and not checked for a total (UI_Type = 1). IE: In the achievement_list.lub file, UI_Type 0 is displayed as non-incremental while 1 shows a progress bar of completion for the achievement.</p>
+<pre><code class="language-yml">Condition: &quot; ARG0 &gt;= 100 &quot;
+  Targets:
+    - Id: 0 // Array index value
+      Count: 100
+</code></pre>
+<h3 id="condition">Condition</h3>
+<p>A conditional statement that must be met for the achievement to be considered complete. Accepts script constants, player variables, and ARGX (where X is the argument vector value). The ARGX values are sent from the server to the achievement script engine on special events. See examples below:</p>
+<p>This function will send 1 argument (ARG0) with a value of i + 1 when a friend is added.</p>
+<pre><code class="language-yml">achievement_update_objective(f_sd, AG_ADD_FRIEND, 1, i + 1);
+</code></pre>
+<p>This function will send 2 arguments (ARG0 and ARG1) with values of weapon level and refine level, respectively, when an equipment is successfully refined.</p>
+<pre><code class="language-yml">achievement_update_objective(sd, AG_REFINE_SUCCESS, 2, sd-&gt;inventory_data[i]-&gt;wlv, sd-&gt;inventory.u.items_inventory[i].refine);
+</code></pre>
+<h3 id="map">Map</h3>
+<p>A map name that is used for the Chatting group which increments the counter based on the player's map.  </p>
+<blockquote>
+<p>NOTICE: This option is currently disabled until the official behavior is confirmed.</p>
+</blockquote>
+<h3 id="dependents">Dependents</h3>
+<p>A list of achievement IDs that need to be completed before this achievement is considered complete. See examples below:</p>
+<p>Player must complete achievements 10001 and 10002 first.</p>
+<pre><code class="language-yml">Dependents:
+  10001: true
+  10002: true
+</code></pre>
+<p>Used with the import, dependent achievements can be disabled. The player now only requires completion of achievement 10001.</p>
+<pre><code>Dependents:
+  10002: false
+</code></pre>
+<h3 id="rewards">Rewards</h3>
+<p>A list of rewards that are given on completion. All fields are optional.</p>
+<pre><code class="language-yml">Item: Item Name
+Amount: Amount of Item (Default: 1)
+Script: Bonus Script
+TitleId: Title ID
+</code></pre>
+<h3 id="score">Score</h3>
+<p>Achievement points that are given on completion.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../effect_list/" class="btn btn-neutral float-right" title="Effect list">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>rAthena</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/rathena/rathena" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../effect_list/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
