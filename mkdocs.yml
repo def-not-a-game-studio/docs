@@ -10,6 +10,13 @@ copyright: rAthena
 docs_dir: ../rathena/doc
 nav:
     - Home: index.md
+    - Database:
+      - Achievements: achievements.md
+      - Effect list: effect_list.md
+    - Source:
+      - Packets Struct Notation: packet_struct_notation.md
+    - Tools:
+      - Support files generation: map_server_generator.md
     #- About: about.md
     #- Installation: installation.md
     #- Configuration: configuration.md
